@@ -5,7 +5,7 @@ test('message is added to res.locals', () => {
 
  // add a middleware to the end of the chain
  app.use('/', (req, res, next) => {
-  expect(res.locals.message).toBe('something else');
+  expect(res.locals.message).toBe('something wrong');
   next();
  });
 

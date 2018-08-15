@@ -27,7 +27,7 @@ module.exports = { app, port: server.address().port };
 You could reasonably want to write a test that makes sure the middlewares have done their job before getting to the actual handler by adding a new middleware in a test:
 
 ```js
-// __tests__/server.test.js
+// __tests__/passing.server.test.js
 
 const fetch = require('node-fetch');
 
@@ -36,7 +36,7 @@ test('message is added to res.locals', () => {
 
  // add a middleware to the end of the chain
  app.use('/', (req, res, next) => {
-  expect(res.locals.message).toBe('hello');
+  expect(res.locals.message).toBe('something wrong');
   next();
  });
 
@@ -49,7 +49,7 @@ This is impossible today because the Error thrown by `expect` is caught by Expre
 Instead, you have to do something like:
 
 ```js
-// __tests__/server.test.js
+// __tests__/failing.server.test.js
 
 const fetch = require('node-fetch');
 
@@ -65,6 +65,6 @@ it('has added the message to res.locals', async () => {
  });
 
  await fetch(`http://localhost:${port}/`);
- expect(message).toBe('hello');
+ expect(message).toBe('something wrong');
 });
 ```
